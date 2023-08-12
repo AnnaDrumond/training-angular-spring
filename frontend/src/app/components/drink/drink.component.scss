@@ -1,0 +1,85 @@
+.container-drink-table {
+  margin-left: 220px;
+}
+
+::ng-deep {
+  .buttons-drink-table {
+    margin-left: 9%;
+
+    .p-button {
+      margin-left: 3%;
+      margin-right: 1%;
+      margin-top: 3%;
+    }
+
+    .p-button-create {
+      background-color: #3cb371;
+      border: #3cb371;
+    }
+
+    .p-button-create:hover {
+      background-color: #3cb371;
+    }
+
+    .p-button-edit {
+      background-color: #007fd1;
+      border: #007fd1;
+    }
+
+    .p-button-edit:hover {
+      background-color: #007fd1;
+    }
+
+    .p-button-delete {
+      background-color: #e32636;
+      border: #e32636;
+    }
+
+    .p-button-delete:hover {
+      background-color: #e32636;
+    }
+
+    .p-button-disabled-delete {
+      background-color: #ff6961;
+      border: #ff6961;
+    }
+
+    .p-button-disabled-delete:hover {
+      background-color: #ff6961;
+    }
+    .p-button-disabled-edit {
+      background-color: #a8dae5;
+      border: #a8dae5;
+    }
+
+    .p-button-disabled-edit:hover {
+      background-color: #a8dae5;
+    }
+  }
+  .p-confirmDialog-delete {
+    .p-confirm-dialog-accept {
+      border: #e32636;
+      background-color: #e32636;
+    }
+    .p-confirm-dialog-reject {
+      border: gray;
+      background-color: gray;
+    }
+    .p-confirm-dialog-accept:hover {
+      border: #fa8072;
+      background-color: #fa8072;
+    }
+    .p-confirm-dialog-reject:hover {
+      border: gray;
+      background-color: gray;
+    }
+  }
+
+  p-carc {
+    p-table {
+      .p-inputtext {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<p-toast></p-toast>
+<div class="general-div">
+
+  <div class="cards-storage">
+    <div class="individual-card" *ngFor="let storage of storages">
+      <p-card>
+        <ng-template pTemplate="header">
+          <h3 class="header">{{ storage.location }} - {{ storage.code }}</h3>
+
+        </ng-template>
+        <p class="p-capacity">Capacidade: {{ storage.capacity }}
+          <p-progressBar
+                      [value]="(storage.totalDrinksStored*100/storage.capacity).toFixed()">
+          </p-progressBar>
+        </p>
+        <p class="p-total">Bebidas em estoque: {{ storage.totalDrinksStored }}</p>
+        <p class="p-remaining">Estoque disponível: {{ storage.remainingCapacity }} </p>
+
+
+        <ng-template pTemplate="footer">
+
+          <br>
+          <p-button class="button-add"
+                    label="Add bebida" icon="pi pi-plus"
+                    [disabled]="storage.remainingCapacity == 0 ? true : false"
+                    (onClick)="openModalAndGetStorage(storage)">
+          </p-button>
+
+          <p-button class="button-see"
+                    (onClick)="getStorageId(storage.id)"
+                    icon="pi pi-search"
+                    [style]="{'margin-left': '.5em'}">
+          </p-button>
+        </ng-template>
+
+      </p-card>
+    </div>
+  </div>
+
+  <div class="table">
+
+    <p-table [value]="pageRequest?.content"
+            responsiveLayout="scroll"
+            selectionMode="single"
+            styleClass="p-table-brand"
+            [lazy]="true"
+            [lazyLoadOnInit]="false"
+            [paginator]="true"
+            [rows]="pageRequest?.size"
+            [totalRecords]="pageRequest?.totalElements"
+            [customSort]="true"
+            (onLazyLoad)="lazyLoad($event)"
+            styleClass="p-datatable-gridlines"
+            responsiveLayout="scroll">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText
+                  type="text"
+                  [(ngModel)]="keyword"
+                  placeholder="Pesquisar marca/bebida..."
+                  (input)="captureEvent()"
+                  class="p-inputtext p-component p-element" />
+            <p></p>
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="drink.name">Nome Bebida<p-sortIcon field="drink.name"></p-sortIcon>
+          </th>
+          <th>Volume </th>
+          <th pSortableColumn="drink.brand.name">Marca<p-sortIcon field="drink.brand.name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="quantity">Quantidade<p-sortIcon field="quantity"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-data>
+        <tr [pSelectableRow]="data">
+          <td [innerHTML]="data.drinkName| highlight: keyword"></td>
+          <td [innerHTML]="data.drinkVolume | symbols : ' ml'| highlight: keyword"></td>
+          <td [innerHTML]="data.brandName | highlight: keyword"></td>
+          <td [innerHTML]="data.quantity | highlight: keyword"></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <app-storage-modal
+                  [onShowModalFilhoRecebeDoPai]="showModalPai"
+                  (hideModalFilhoEnviaParaPai)="showModalPai = false"
+                  (showSucessMessageAndUpdateFilho)="onShowSucessMessageAndUpdatePai($event)">
+  </app-storage-modal>
+</div>

@@ -1,0 +1,90 @@
+<p-toast></p-toast>
+
+<div class="container-drink-table">
+
+  <div class="buttons-drink-table">
+    <p-button label="Nova" icon="pi pi-plus" iconPos="left"
+              styleClass="p-button-create"
+              (onClick)="setIsModalActionCreateAndOpenModal(true)">
+    </p-button>
+
+    <p-button label="Editar" icon="pi pi-pencil" iconPos="left"
+              [styleClass]="!selectedDrinkPai? 'p-button-disabled-edit' : 'p-button-edit'"
+              (onClick)="setIsModalActionCreateAndOpenModal(false)"
+              [disabled]="!selectedDrinkPai">
+    </p-button>
+
+    <p-button label="Apagar"
+              icon="pi pi-trash" iconPos="left"
+              [styleClass]="!selectedDrinkPai? 'p-button-disabled-delete' : 'p-button-delete'"
+              [disabled]="!selectedDrinkPai"
+              (onClick)="openModalConfirmDialog()">
+    </p-button>
+  </div>
+
+  <p-card [style]="{'width': '65rem', 'margin-left': '12em', 'margin-top': '3em'}">
+
+    <p-table
+              [value]="pageRequest?.content"
+              [lazy]="true"
+              (onLazyLoad)="lazyLoad($event)"
+              [paginator]="true"
+              [totalRecords]="pageRequest?.totalElements"
+              [loading]="loading"
+              [rows]="pageRequest?.size"
+              selectionMode="single"
+              (onRowSelect)="selectedDrinkPai = $event.data"
+              (onRowUnselect)="onRowUnselectOnDrinkTable()"
+              [customSort]="true">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input  pInputText type="text"
+                    [(ngModel)]="keyword"
+                    placeholder="Pesquisar..."
+                    (input)="captureEvent()"
+                    class="p-inputtext p-component p-element" />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">Nome<p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="unitPrice">Preço Unitário<p-sortIcon field="unitPrice"></p-sortIcon></th>
+          <th pSortableColumn="volumeMl">Volume<p-sortIcon field="volumeMl"></p-sortIcon></th>
+          <th pSortableColumn="type">Tipo<p-sortIcon field="type"></p-sortIcon></th>
+          <th pSortableColumn="brand">Marca<p-sortIcon field="brand"></p-sortIcon></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-drink>
+        <tr [pSelectableRow]="drink">
+          <td [innerHTML]="drink.name| highlight: keyword"></td>
+          <td [innerHTML]="drink.unitPrice | number : '1.2-2'| symbols : ' €'| highlight: keyword"></td>
+          <td [innerHTML]="drink.volumeMl | symbols : ' ml' | highlight: keyword"></td>
+          <td [innerHTML]="drink.type.typeValue | highlight: keyword"></td>
+          <td [innerHTML]="drink.nameBrand | highlight: keyword"></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+
+<app-drink-modal
+              [onShowModalFilhoRecebeValorDoPai]="showModalNoComponentePai"
+              (showSucessMessageAndUpdateNoFilho)="onShowSucessMessageAndUpdateNoPai($event)"
+              (hideModalFilhoEnviaValorParaPai)="showModalNoComponentePai = false"
+              [modalStateFilho$]="modalStatePai$"
+              [selectedDrinkFilho]="selectedDrinkPai">
+</app-drink-modal>
+
+<p-confirmDialog  [style]="{width: '50vw'}"
+                  [baseZIndex]="10000"
+                  acceptLabel="Confirmar"
+                  rejectLabel="Cancelar"
+                  [closeOnEscape]="false"
+                  styleClass="p-confirmDialog-delete">
+</p-confirmDialog>

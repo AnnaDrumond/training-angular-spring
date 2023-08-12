@@ -1,0 +1,51 @@
+.general-div{
+  display: grid;
+
+//https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout
+  .cards-storage {
+    padding-left: 12px;
+    padding-right: 12px;
+    width: 33.33%;
+    height: 100vh;
+    overflow-y: auto;
+    grid-column: 1/3;
+    grid-row: 1 / 5;
+  }
+
+  .table{
+    width: 64%;
+    margin-left:250px;
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    margin-top:50px;
+  }
+
+}
+
+
+
+::ng-deep {
+  .header {
+    padding-top: 30px;
+    padding-left: 40px;
+  }
+
+  .p-capacity {
+    margin-top: -20px;
+    margin-left: 60px;
+  }
+
+  .p-total,.p-remaining {
+    margin-left: 60px;
+  }
+
+  .p-remaining{
+    margin-bottom: -20px;
+  }
+
+  .button-add{
+    margin-left: 60px;
+
+  }
+
+}

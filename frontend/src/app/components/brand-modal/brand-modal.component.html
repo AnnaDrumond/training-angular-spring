@@ -1,0 +1,67 @@
+<p-dialog
+          [(visible)]="onShowModalNoFilhoRecebeValorDoPai"
+          [style]="{width: '35vw', height:'22vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          header="Criar marca"
+          [modal]="true"
+          [closeOnEscape]="false"
+          [closable]="false">
+
+  <p-toast key="toast-modal"></p-toast>
+
+  <div class="form">
+    <form name="myForm" #dataBrandForm="ngForm">
+
+      <div class="div-inputs">
+
+        <div class="p-grid p-fluid">
+
+
+          <label for="input-name">Nome</label>
+          <input type="text"
+                inputId="input-name"
+                required
+                pInputText
+                (ngModel)="name"
+                name="name"
+                class="input-name p-inputtext"
+                p-inputtext>
+          <div class="mandatoryFieldMessage">
+            <small severity="error" *ngIf="submitted && !dataBrandForm.value.name">
+              Nome da marca é de preenchimento obrigatório!
+            </small>
+          </div>
+        </div>
+
+        <br>
+        <div class="p-grid p-fluid">
+          <label for="input-source">Origem</label>
+          <input type="text"
+                inputId="input-source"
+                required
+                pInputText
+                (ngModel)="source"
+                name="source"
+                class="input-name p-inputtext"
+                p-inputtext>
+          <div class="mandatoryFieldMessage">
+            <small severity="error" *ngIf="submitted && !dataBrandForm.value.source">
+              Origem é de preenchimento obrigatório!
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons-form">
+        <p-button icon="pi pi-check" label="Guardar" class="p-button-text" (onClick)="onAddBrand(dataBrandForm)"
+          styleClass='p-button-save'>
+        </p-button>
+
+        <p-button icon="pi pi-times" label="Cancelar" (onClick)="cancelActionModal(dataBrandForm)"
+          styleClass="p-button-cancel">
+        </p-button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

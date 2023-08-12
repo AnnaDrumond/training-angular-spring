@@ -1,0 +1,76 @@
+<p-dialog
+          [(visible)]="onShowModalFilhoRecebeDoPai"
+          [style]="{width: '40vw', height:'30vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          header="Adicionar bebida no armazem: "
+          [modal]="true"
+          [closeOnEscape]="false"
+          [closable]="false">
+
+  <p>{{headerStorage}}</p>
+
+  <p-toast key="toast-modal-storage"></p-toast>
+  <div class="form">
+    <form name="myForm" #dataForm="ngForm">
+
+      <div class="div-inputs">
+        <div class="p-grid p-fluid">
+
+          <label for="minmax-buttons">Quantidade</label>
+          <p-inputNumber mode="decimal"
+                        [showButtons]="true"
+                        [required]="true"
+                        (ngModel)="quantity"
+                        name="quantity"
+                        inputId="minmax-buttons"
+                        [min]="0">
+          </p-inputNumber>
+        </div>
+
+      </div>
+      <br>
+      <div class="div-dropdown">
+
+        <p-dropdown [options]="drinks"
+                    name="drink"
+                    placeholder="Escolha a bebida"
+                    optionLabel="name"
+                    [showClear]="true"
+                    class="dropdown-modal-drink"
+                    [required]="true"
+                    [filter]="true"
+                    filterBy="name,nameBrand"
+                    [(ngModel)]="selectedDrink">
+
+          <ng-template pTemplate="selectedItem">
+            <div class="drink-item drink-item-value" *ngIf="selectedDrink">
+              <div>{{selectedDrink.name}} ({{selectedDrink.volumeMl}}) - {{selectedDrink.nameBrand}}</div>
+            </div>
+          </ng-template>
+
+          <ng-template let-drink pTemplate="item">
+            <div class="drink-item">
+              <div>{{drink.name}} ({{drink.volumeMl | symbols : ' ml'}}) - {{drink.nameBrand}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="buttons-form">
+        <p-button icon="pi pi-check"
+                  label="Guardar"
+                  class="p-button-text"
+                  (onClick)="onAddDrinkInStorage(dataForm)"
+                  styleClass='p-button-save'>
+        </p-button>
+
+        <p-button icon="pi pi-times"
+                  label="Cancelar"
+                  (onClick)="cancelActionModal(dataForm, false)"
+                  styleClass="p-button-cancel">
+        </p-button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

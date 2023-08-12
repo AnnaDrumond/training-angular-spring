@@ -1,0 +1,63 @@
+.container-brand {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep {
+  .buttons-brand {
+    margin-left: 23%;
+    margin-top: 3%;
+
+    .p-button-delete {
+      background-color: #e32636;
+      border: #e32636;
+    }
+
+    .p-button-delete:hover {
+      background-color: #e32636;
+    }
+
+    .p-button-disabled-delete {
+      background-color: #ff6961;
+      border: #ff6961;
+    }
+
+    .p-button-disabled-delete:hover {
+      background-color: #ff6961;
+    }
+
+    .p-button-create {
+      background-color: #3cb371;
+      border: #3cb371;
+      margin-right: 40px;
+    }
+
+    .p-button-create:hover {
+      background-color: #3cb371;
+    }
+  }
+
+  .p-table-brand {
+    margin-top: 5%;
+    width: 65rem;
+  }
+
+  .p-confirmDialog-delete {
+    .p-confirm-dialog-accept {
+      border: #e32636;
+      background-color: #e32636;
+    }
+    .p-confirm-dialog-reject {
+      border: gray;
+      background-color: gray;
+    }
+    .p-confirm-dialog-accept:hover {
+      border: #fa8072;
+      background-color: #fa8072;
+    }
+    .p-confirm-dialog-reject:hover {
+      border: gray;
+      background-color: gray;
+    }
+  }
+}

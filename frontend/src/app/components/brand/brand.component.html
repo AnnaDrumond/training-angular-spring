@@ -1,0 +1,121 @@
+<p-toast></p-toast>
+
+<div class="buttons-brand">
+  <p-button label="Nova"
+            icon="pi pi-plus"
+            iconPos="left"
+            styleClass='p-button-create'
+            (onClick)="openModalCreate()">
+  </p-button>
+
+  <p-button label="Apagar" icon="pi pi-trash" iconPos="left"
+            [styleClass]="!selectedBrand? 'p-button-disabled-delete' : 'p-button-delete'"
+            [disabled]="!selectedBrand"
+            (onClick)="openModalConfirmDialog()">
+  </p-button>
+</div>
+
+<div class="container-brand">
+  <p-table [value]="pageRequest?.content"
+          responsiveLayout="scroll"
+          selectionMode="single"
+          (onRowSelect)="selectedBrand =$event.data"
+          (onRowUnselect)="onRowUnselectOnBrandTable()"
+          styleClass="p-table-brand"
+          [lazy]="true"
+          (onLazyLoad)="lazyLoad($event)"
+          [paginator]="true"
+          [loading]="loading"
+          [rows]="pageRequest?.size"
+          [totalRecords]="pageRequest?.totalElements"
+          [customSort]="true"
+          dataKey="id">
+
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+        <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text"
+                [(ngModel)]="keyword"
+                placeholder="Pesquisar marca ou origem..."
+                (input)="captureEvent()"
+                class="p-inputtext p-component p-element" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem"></th>
+        <th pSortableColumn="name">Marca<p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="source">Origem<p-sortIcon field="source"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-brand let-expanded="expanded">
+      <tr [pSelectableRow]="brand" (click)="getDrinksByBrand(brand)">
+        <td>
+          <button type="button" pButton pRipple class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [pRowToggler]="brand"></button>
+        </td>
+        <td [innerHTML]="brand.name| highlight: keyword"></td>
+        <td [innerHTML]="brand.source| highlight: keyword"></td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-brand>
+      <tr>
+        <td colspan="7">
+          <div class="p-p-3">
+            <p-table [value]="brand.drinks" dataKey="id">
+              <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Nome<p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="unitPrice">Preço Unitário<p-sortIcon field="unitPrice"></p-sortIcon>
+        </th>
+        <th pSortableColumn="volumeMl">Volume<p-sortIcon field="volumeMl"></p-sortIcon>
+        </th>
+        <th pSortableColumn="type">Tipo<p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="brand">Marca<p-sortIcon field="brand"></p-sortIcon>
+        </th>
+        <th style="width: 4rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-drink>
+      <tr>
+        <td>{{drink.name}}</td>
+        <td>{{drink.unitPrice | number : '1.2-2'| symbols : ' €'}} </td>
+        <td>{{drink.volumeMl | symbols : ' ml' }}</td>
+        <td>{{drink.type.typeValue}}</td>
+        <td>{{drink.nameBrand}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Não existem bebidas associadas a esta marca.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+</td>
+</tr>
+</ng-template>
+</p-table>
+</div>
+
+<app-brand-modal
+            [onShowModalNoFilhoRecebeValorDoPai]="showModalNoComponentePai"
+            (hideModalNoComponenteFilhoEnviaValorParaPai)="showModalNoComponentePai = false"
+            (succesResultAndUpdateNoFilho)="onSuccesResultAndUpdateNoPai($event)">
+</app-brand-modal>
+
+<p-confirmDialog [style]="{width: '50vw'}"
+                [baseZIndex]="10000"
+                acceptLabel="Confirmar"
+                rejectLabel="Cancelar"
+                [closeOnEscape]="false"
+                styleClass="p-confirmDialog-delete">
+</p-confirmDialog>

@@ -1,0 +1,34 @@
+::ng-deep {
+  .buttons-form {
+    display: flex;
+    margin-left: 110px;
+    margin-top: 80px;
+  }
+
+  .p-dialog {
+    .p-button-save {
+      background-color: #3cb371;
+      margin-right: 30px;
+      border: #3cb371;
+    }
+    .p-button-save:hover {
+      background-color: #3cb371;
+    }
+    .p-button-cancel {
+      background-color: gray;
+      border: gray;
+    }
+    .p-button-cancel:hover {
+      background-color: gray;
+    }
+
+    .p-button-edit {
+      margin-right: 30px;
+      background-color: #007fd1;
+      border: #007fd1;
+    }
+    .p-button-edit:hover {
+      background-color: #007fd1;
+    }
+  }
+}

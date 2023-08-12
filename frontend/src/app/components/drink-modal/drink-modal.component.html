@@ -1,0 +1,56 @@
+<p-dialog
+          [(visible)]="onShowModalFilhoRecebeValorDoPai"
+          [style]="{width: '40vw', height:'25vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          [header]="IsModalCreate ? createText : editText"
+          [modal]="true"
+          [closeOnEscape]="false"
+          [closable]="false">
+
+  <p-toast key="toast-modal"></p-toast>
+
+  <div class="form">
+    <form name="myForm" #dataDrinkForm="ngForm"
+      (ngSubmit)="IsModalCreate ? onAddDrink(dataDrinkForm) : onEditDrink(dataDrinkForm)">
+
+      <div class="div-dropdown">
+        <p-dropdown [options]="brands" [(ngModel)]="!drinkToEdit ? '' : drinkToEdit.idBrand" name="idBrand"
+          placeholder="Escolha uma marca" optionLabel="name" [showClear]="true" class="dropdown-modal-drink"
+          optionValue="id" [required]="true">
+        </p-dropdown>
+
+        <p-dropdown [options]="typesDrink" [(ngModel)]="!drinkToEdit ? '' : drinkToEdit.type.drinkCode" name="type"
+          placeholder="Escolha o tipo" optionLabel="typeValue" [showClear]="true" [required]="true"
+          class="dropdown-modal-drink" optionValue="drinkCode"></p-dropdown>
+      </div>
+
+      <div class="div-inputs">
+        <label for="input-name">Nome</label>
+        <input type="text" inputId="input-name" required pInputText [(ngModel)]="!drinkToEdit ? '' : drinkToEdit.name"
+          name="name" class="input-name p-inputtext" p-inputtext>
+
+        <label for="input-unit-price">Preço unitário</label>
+        <p-inputNumber [required]="true" [(ngModel)]="!drinkToEdit ? '' : drinkToEdit.unitPrice" name="unitPrice"
+          inputId="input-unit-price" mode="currency" currency="EUR" locale="pt-PT" class="input-number">
+        </p-inputNumber>
+
+        <label>Volume(ml)</label>
+        <p-inputNumber [required]="true" [(ngModel)]="!drinkToEdit ? '' : drinkToEdit.volumeMl" name="volumeMl"
+          inputId="input-unit-volume" mode="decimal" suffix=" ml" class="input-volume">
+        </p-inputNumber>
+      </div>
+
+      <div class="buttons-form">
+        <p-button icon="pi pi-check" label="Guardar" type="submit" class="p-button-text"
+          [styleClass]="IsModalCreate? 'p-button-save' : 'p-button-edit'">
+        </p-button>
+
+        <p-button icon="pi pi-times" label="Cancelar" (onClick)="cancelActionModal(dataDrinkForm, false)"
+          styleClass="p-button-cancel">
+        </p-button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>
